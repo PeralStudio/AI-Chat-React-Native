@@ -2,7 +2,7 @@
   "expo": {
     "name": "chatgpt-rn",
     "slug": "chatgpt-rn",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -22,7 +22,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.peralstudio.aichatbot"
+      "package": "com.peralstudio.aichatbot",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
