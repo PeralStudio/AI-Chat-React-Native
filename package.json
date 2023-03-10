@@ -19,6 +19,7 @@
     "react-native": "0.71.3",
     "react-native-chatgpt": "^0.9.0",
     "react-native-dotenv": "^3.4.8",
+    "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-url-polyfill": "^1.3.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-webview": "11.26.0"
