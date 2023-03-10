@@ -11,17 +11,17 @@ import {
 import React, { useState, useRef } from "react";
 import { Configuration, OpenAIApi } from "openai";
 import { FontAwesome5 } from "@expo/vector-icons";
-
-const { OPENAI_API_KEY } = process.env;
+import { OPENAI_API_KEY } from "@env";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const Home = () => {
     const [quest, setQuest] = useState("");
     const [data, setData] = useState([]);
-    const [loaded, setLoaded] = useState(1);
+    const [loaded, setLoaded] = useState(false);
     const scrollViewRef = useRef(null);
 
     const getData = async () => {
-        setLoaded(2);
+        setLoaded(true);
         setQuest("");
 
         const configuration = new Configuration({
@@ -36,12 +36,20 @@ const Home = () => {
 
         const text = completion.data.choices[0].message.content;
         setData([...data, { type: "user", text: quest }, { type: "bot", text }]);
-        setLoaded(3);
+        setLoaded(false);
     };
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }}>
             <View style={{ flex: 1, backgroundColor: "#333541" }}>
+                <Spinner
+                    visible={loaded}
+                    textContent={"Loading..."}
+                    textStyle={styles.spinnerTextStyle}
+                    overlayColor="rgba(0,0,0,0.8)"
+                    animation="fade"
+                    color="#c2c2c6"
+                />
                 <View>
                     <Text
                         style={{
@@ -117,7 +125,6 @@ const Home = () => {
                         style={styles.input}
                         onSubmitEditing={getData}
                     />
-                    {/* <Button onPress={getData} title="▶️ Enviar" /> */}
                 </View>
             </View>
         </KeyboardAvoidingView>
@@ -125,6 +132,9 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+    spinnerTextStyle: {
+        color: "#c2c2c6"
+    },
     inputContainer: {
         flex: 1,
         justifyContent: "flex-end",
