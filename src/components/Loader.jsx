@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
 import { WaveIndicator } from "react-native-indicators";
 
