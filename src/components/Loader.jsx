@@ -3,7 +3,6 @@ import Spinner from "react-native-loading-spinner-overlay";
 import { WaveIndicator } from "react-native-indicators";
 
 const Loader = ({ visible }) => {
-    console.log(visible);
     return (
         <Spinner
             visible={visible}
