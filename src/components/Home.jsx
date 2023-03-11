@@ -1,23 +1,17 @@
-import {
-    View,
-    Text,
-    TextInput,
-    StyleSheet,
-    FlatList,
-    ScrollView,
-    KeyboardAvoidingView
-} from "react-native";
-import React, { useState, useRef } from "react";
+import { View, KeyboardAvoidingView } from "react-native";
+import React, { useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
-import { FontAwesome5 } from "@expo/vector-icons";
 import { OPENAI_API_KEY } from "@env";
+
 import Loader from "./Loader";
+import ChatView from "./ChatView";
+import ChatInput from "./ChatInput";
+import Title from "./Title";
 
 const Home = () => {
     const [quest, setQuest] = useState("");
     const [data, setData] = useState([]);
     const [loaded, setLoaded] = useState(false);
-    const scrollViewRef = useRef(null);
 
     const getData = async () => {
         setLoaded(true);
@@ -41,109 +35,12 @@ const Home = () => {
         <KeyboardAvoidingView style={{ flex: 1 }}>
             <View style={{ flex: 1, backgroundColor: "#333541" }}>
                 <Loader visible={loaded} />
-                <View>
-                    <Text
-                        style={{
-                            color: "#ECECF1",
-                            fontSize: 30,
-                            fontWeight: "bold",
-                            textAlign: "center",
-                            paddingTop: 30
-                        }}
-                    >
-                        AI CHAT BOT
-                    </Text>
-                </View>
-                <View
-                    style={{
-                        marginTop: 10,
-                        padding: 10,
-                        height: "80%"
-                    }}
-                >
-                    <ScrollView
-                        ref={scrollViewRef}
-                        onContentSizeChange={() => {
-                            scrollViewRef.current?.scrollToEnd({ animated: true });
-                        }}
-                    >
-                        {data.length <= 0 && (
-                            <Text
-                                style={{
-                                    fontSize: 20,
-                                    color: "#c2c2c6",
-                                    textAlign: "center",
-                                    fontWeight: "bold",
-                                    flex: 1,
-                                    paddingTop: 120
-                                }}
-                            >
-                                Write a question to get started.
-                            </Text>
-                        )}
-                        <FlatList
-                            keyExtractor={(item, index) => index.toString()}
-                            data={data}
-                            renderItem={({ item }) => (
-                                <Text
-                                    style={{
-                                        padding: 10,
-                                        paddingBottom: 15,
-                                        fontSize: 14,
-                                        color: item.type === "user" ? "gray" : "white",
-                                        backgroundColor:
-                                            item.type === "user" ? "#333541" : "#3F414F",
-                                        borderRadius: 5
-                                    }}
-                                >
-                                    {item.type === "user" ? (
-                                        <FontAwesome5 name="user-circle" size={22} color={"gray"} />
-                                    ) : (
-                                        <FontAwesome5 name="robot" size={18} color={"white"} />
-                                    )}
-                                    {/* {item.type === "user" ? "You: " : "ChatGPT: "} */}{" "}
-                                    {item.text}
-                                </Text>
-                            )}
-                        />
-                    </ScrollView>
-                </View>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        value={quest}
-                        placeholder={"💬 Write a question here..."}
-                        onChangeText={(text) => setQuest(text)}
-                        style={styles.input}
-                        onSubmitEditing={getData}
-                    />
-                </View>
+                <Title />
+                <ChatView data={data} />
+                <ChatInput quest={quest} setQuest={setQuest} getData={getData} />
             </View>
         </KeyboardAvoidingView>
     );
 };
-
-const styles = StyleSheet.create({
-    spinnerTextStyle: {
-        color: "#c2c2c6",
-        fontSize: 16
-    },
-    inputContainer: {
-        flex: 1,
-        justifyContent: "flex-end",
-        paddingBottom: 0,
-        padding: 10
-    },
-    input: {
-        height: 40,
-        padding: 10,
-        marginTop: 20,
-        fontSize: 16,
-        color: "white",
-        backgroundColor: "#4a4e63",
-        textAlign: "center",
-        borderRadius: 10,
-        marginBottom: 20
-    }
-});
 
 export default Home;
