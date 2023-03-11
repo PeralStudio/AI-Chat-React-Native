@@ -11,8 +11,8 @@ import {
 import React, { useState, useRef } from "react";
 import { Configuration, OpenAIApi } from "openai";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { OPENAI_API_KEY } from "@env";
 import Spinner from "react-native-loading-spinner-overlay";
+import { OPENAI_API_KEY } from "@env";
 
 const Home = () => {
     const [quest, setQuest] = useState("");
@@ -22,8 +22,6 @@ const Home = () => {
 
     const getData = async () => {
         setLoaded(true);
-        setQuest("");
-
         const configuration = new Configuration({
             apiKey: OPENAI_API_KEY
         });
@@ -37,6 +35,7 @@ const Home = () => {
         const text = completion.data.choices[0].message.content;
         setData([...data, { type: "user", text: quest }, { type: "bot", text }]);
         setLoaded(false);
+        setQuest("");
     };
 
     return (
