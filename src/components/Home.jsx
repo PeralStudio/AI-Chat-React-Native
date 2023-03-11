@@ -1,7 +1,6 @@
 import {
     View,
     Text,
-    Button,
     TextInput,
     StyleSheet,
     FlatList,
@@ -11,8 +10,8 @@ import {
 import React, { useState, useRef } from "react";
 import { Configuration, OpenAIApi } from "openai";
 import { FontAwesome5 } from "@expo/vector-icons";
-import Spinner from "react-native-loading-spinner-overlay";
 import { OPENAI_API_KEY } from "@env";
+import Loader from "./Loader";
 
 const Home = () => {
     const [quest, setQuest] = useState("");
@@ -41,14 +40,7 @@ const Home = () => {
     return (
         <KeyboardAvoidingView style={{ flex: 1 }}>
             <View style={{ flex: 1, backgroundColor: "#333541" }}>
-                <Spinner
-                    visible={loaded}
-                    textContent={"Loading..."}
-                    textStyle={styles.spinnerTextStyle}
-                    overlayColor="rgba(0,0,0,0.8)"
-                    animation="fade"
-                    color="#c2c2c6"
-                />
+                <Loader visible={loaded} />
                 <View>
                     <Text
                         style={{
@@ -132,7 +124,8 @@ const Home = () => {
 
 const styles = StyleSheet.create({
     spinnerTextStyle: {
-        color: "#c2c2c6"
+        color: "#c2c2c6",
+        fontSize: 16
     },
     inputContainer: {
         flex: 1,
